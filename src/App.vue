@@ -10,7 +10,8 @@
 <script>
 import Vue from 'vue'
 import tabbar from './components/Tabbar'
-Vue.component('tabbar', tabbar)
+// import FilmTabbar from './components/FilmTabbar'
+Vue.component('tabbar', tabbar) // 注册组件
 export default {
 
 }
@@ -20,6 +21,9 @@ export default {
   *{
     padding: 0;
     margin: 0;
+  }
+  a{
+    text-decoration: none;
   }
   html,body{
     width: 100%;

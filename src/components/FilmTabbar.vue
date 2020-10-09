@@ -8,7 +8,18 @@
         </ul>
     </div>
 </template>
+<script>
+export default {
+//   data () {
 
+//   },
+//   methods: {
+//     handleCity () {
+//       this.$router.push('/city')
+//     }
+//   }
+}
+</script>
 <style scoped lang="scss">
     div{
         position: fixed;
