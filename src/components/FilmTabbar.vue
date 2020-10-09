@@ -1,18 +1,21 @@
 <template>
-    <div>
+    <div id="sw">
         <ul>
-            <li>城市</li>
             <router-link to="nowplaying" tag="li" active-class="nowShow">热映</router-link>
             <router-link to="cinema" tag="li" active-class="nowShow">影院</router-link>
             <router-link to="comingsoon" tag="li" active-class="nowShow">待映</router-link>
             <router-link to="classicmovies" tag="li" active-class="nowShow">经典电影</router-link>
-            <li>放大镜</li>
         </ul>
     </div>
 </template>
 
 <style scoped lang="scss">
     div{
+        position: fixed;
+        top: 0;
+        background-color: #fff;
+        width: 100%;
+        z-index: 10;
         ul{
             display: flex;
             li{
