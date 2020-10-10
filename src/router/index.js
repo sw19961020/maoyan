@@ -155,7 +155,7 @@ const routes = [
     ]
   },
   {
-    path: '/detail',
+    path: '/detail:id',
     component: Detail
   },
   {

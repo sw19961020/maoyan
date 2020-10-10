@@ -12,7 +12,7 @@
         </header>
 
         <van-list v-model="loading" :finished="finished"  @load="onLoad" class="ulall">
-            <van-cell v-for="data in filmList" :key="data.id" class="liall">
+            <van-cell v-for="(data, index) in filmList" :key="data.id" class="liall" @click="handleDetail(data.id, index)">
                 <img :src="data.img  | filmImg">
                 <aside>
                     <h2>{{ data.nm }}</h2>
@@ -148,6 +148,10 @@ export default {
       })
       this.loading = false
       this.finished = true
+    },
+    handleDetail (id, index) {
+      console.log(id, index)
+      this.$router.push(`/detail${id}`)
     }
   }
 }
