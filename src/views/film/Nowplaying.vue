@@ -54,11 +54,12 @@
 
 <script>
 import Vue from 'vue'
-import axios from 'axios'
+// import axios from 'axios'
+import http from '@/util/ajax'
 import nowSwiper from './nowplaying/Nowswiper'
 import starSwiper from './nowplaying/Starswiper'
 import 'swiper/swiper-bundle.min.css'
-import { List, Cell } from 'vant'
+import { List, Cell, Toast } from 'vant'
 Vue.use(List).use(Cell)
 Vue.component('nowSwiper', nowSwiper)
 Vue.component('starSwiper', starSwiper)
@@ -115,30 +116,31 @@ export default {
     }
   },
   mounted () {
-    axios({
-      url: '/ajax/movieOnInfoList?token=&optimus_uuid=114B3620E54411EAB4B1EF6A4AAA99BA5AF1383A920A4E2AAA392AE47C42F2D5&optimus_risk_level=71&optimus_code=10',
+    Toast.loading({
+      message: '加载中...',
+      forbidClick: true
+    })
+    http({
+      url: '/movieOnInfoList?token=&optimus_uuid=114B3620E54411EAB4B1EF6A4AAA99BA5AF1383A920A4E2AAA392AE47C42F2D5&optimus_risk_level=71&optimus_code=10',
       method: 'get'
     }).then(res => {
-      console.log(res.data)
       this.filmList = res.data.movieList
     })
-    axios({
-      url: '/ajax/topRatedMovies?token=&optimus_uuid=114B3620E54411EAB4B1EF6A4AAA99BA5AF1383A920A4E2AAA392AE47C42F2D5&optimus_risk_level=71&optimus_code=10',
+    http({
+      url: '/topRatedMovies?token=&optimus_uuid=114B3620E54411EAB4B1EF6A4AAA99BA5AF1383A920A4E2AAA392AE47C42F2D5&optimus_risk_level=71&optimus_code=10',
       method: 'get'
     }).then(res => {
       this.hotDom = res.data
       this.isshow = true
-      console.log(res.data)
     })
   },
   methods: {
     onLoad () {
-      axios({
-        url: '/ajax/moreComingList?token=&movieIds=1263349%2C1326724%2C1210778&optimus_uuid=114B3620E54411EAB4B1EF6A4AAA99BA5AF1383A920A4E2AAA392AE47C42F2D5&optimus_risk_level=71&optimus_code=10',
+      http({
+        url: '/moreComingList?token=&movieIds=1263349%2C1326724%2C1210778&optimus_uuid=114B3620E54411EAB4B1EF6A4AAA99BA5AF1383A920A4E2AAA392AE47C42F2D5&optimus_risk_level=71&optimus_code=10',
         method: 'get'
       }).then(res => {
         this.filmList.coming = res.data.coming
-        console.log(this.filmList)
         this.comeshow = true
         setTimeout(() => {
           this.starList = ['https://p1.meituan.net/moviemachine/cba0f2c4bf69791d13586fdb0f9c8ce1167190.jpg', 'https://p0.meituan.net/170.230/movie/c6594ef2705dcaf7d9df857d228b5e1645712.jpg', 'https://p1.meituan.net/movie/3a58a26d0c756324ef9230bb4b2c992f41487.jpg', 'https://p0.meituan.net/movie/92f35f4bec2c47fa045d0b65ddc9fe1929962.jpg', 'https://p1.meituan.net/movie/de4f307bfc401d6a956202817713a90b121522.jpg']
@@ -153,7 +155,7 @@ export default {
 
 <style scoped lang="scss">
     .star{
-        margin: 10px;
+        text-align: center;
         float: left;
         height: 120px;
         img{

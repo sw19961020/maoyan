@@ -4,7 +4,7 @@
             <router-link tag="li" active-class="nowChoose" to="/film">电影/影院</router-link>
             <li>视频</li>
             <li>小视频</li>
-            <li>演出</li>
+            <router-link tag="li" active-class="nowChoose" to="/show">演出</router-link>
             <router-link tag="li" active-class="nowChoose" to="/center">我的</router-link>
         </ul>
     </div>

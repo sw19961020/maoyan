@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="bom">
+    <div id="bom" v-if="tabbarShow">
       <tabbar></tabbar>
     </div>
     <router-view></router-view>
@@ -10,10 +10,14 @@
 <script>
 import Vue from 'vue'
 import tabbar from './components/Tabbar'
+import { mapState } from 'vuex'
+
 // import FilmTabbar from './components/FilmTabbar'
 Vue.component('tabbar', tabbar) // 注册组件
 export default {
-
+  computed: {
+    ...mapState('showModule', ['tabbarShow'])
+  }
 }
 </script>
 
@@ -60,7 +64,6 @@ export default {
         flex: 1;
         .line-ellipsis{
           width: 100px;
-          margin: 10px;
           font-size: 13px;
           text-align: center;
         }
