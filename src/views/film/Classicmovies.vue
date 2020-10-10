@@ -37,7 +37,7 @@ export default {
     }
   },
   mounted () {
-    axios.get('/ajax/moreClassicList?sortId=1&showType=3&limit=10&offset=20&optimus_uuid=836FEBC00A0011EB8D4303BFEF63A30F89399AC08A3A4DDB9AEE9AF4D9BA15ED&optimus_risk_level=71&optimus_code=10').then(res => {
+    axios.get('/ajax/moreClassicList?sortId=1&showType=3&limit=10&offset=10&optimus_uuid=836FEBC00A0011EB8D4303BFEF63A30F89399AC08A3A4DDB9AEE9AF4D9BA15ED&optimus_risk_level=71&optimus_code=10').then(res => {
       this.classicList = res.data
       console.log(this.classicList)
     })
