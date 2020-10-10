@@ -21,6 +21,8 @@
 
 <style scoped lang="scss">
     div{
+        height: 100%;
+        overflow: hidden;
         width: 100%;
         ul{
             background-color: #eee;
@@ -29,7 +31,7 @@
             line-height: 40px;
             width: 1000px;
             justify-content: space-around;
-            overflow-x: scroll;
+            overflow: auto;
             li{
                 text-align: center;
                 &.nowChoose{
