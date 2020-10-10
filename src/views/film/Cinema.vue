@@ -10,7 +10,7 @@
     </van-list>
 </template>
 <script>
-import axios from 'axios'
+import http from '@/util/ajax'
 import { List } from 'vant'
 import Vue from 'vue'
 Vue.use(List)
@@ -24,16 +24,14 @@ export default {
     }
   },
   mounted () {
-    axios.get('/ajax/moreCinemas?day=2020-10-09&offset=0&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602207254355&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10').then((res) => {
-      console.log(res.data)
+    http.get('/moreCinemas?day=2020-10-09&offset=0&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602207254355&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10').then((res) => {
       this.hotDom = res.data
     })
   },
   methods: {
     onLoad () {
-      console.log('到底了')
       this.current++
-      axios.get(`/ajax/moreCinemas?day=2020-10-09&offset=${this.current * 20}&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602207254355&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10`).then((res) => {
+      http.get(`/moreCinemas?day=2020-10-09&offset=${this.current * 20}&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602207254355&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10`).then((res) => {
         this.hotDom += res.data
         this.loading = false
         if (res.data === '') {

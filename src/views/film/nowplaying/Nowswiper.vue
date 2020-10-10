@@ -21,7 +21,6 @@ Vue.directive('sh',
       }
       List.className += ' swiper-wrapper'
       contenter.className += ' swiper-container'
-      console.log(11)
     }
   }
 )
