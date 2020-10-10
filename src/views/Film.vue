@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="allfilm">
         <film-tabbar></film-tabbar>
         <div id="content">
             <router-view></router-view>
@@ -15,3 +15,12 @@ export default {
 
 }
 </script>
+
+<style lang="scss" scoped>
+    #allfilm{
+        height: 100%;
+        #content{
+            height: 100%;
+        }
+    }
+</style>

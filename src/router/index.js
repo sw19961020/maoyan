@@ -143,7 +143,7 @@ const routes = [
           },
           {
             path: '',
-            redirect: '/show/showinfo/all'
+            redirect: '/show/showinfo/singing'
           }
         ]
       },

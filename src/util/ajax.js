@@ -30,7 +30,6 @@ http.interceptors.request.use(function (config) {
 http.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
-
   Toast.clear()
   return response
 }, function (error) {
