@@ -25,7 +25,7 @@
                 <div v-color class="buy">{{ data.globalReleased | isnowplaying }}</div>
             </van-cell>
             <div v-if="comeshow">
-                <div v-for="item in filmList.coming" :key="item.id" class="liall">
+                <van-cell v-for="item in filmList.coming" :key="item.id" class="liall">
                     <img :src="item.img  | filmImg">
                     <aside>
                         <h2>{{ item.nm }}</h2>
@@ -36,7 +36,7 @@
                         <span>{{ item.showInfo }}</span>
                     </aside>
                     <div v-color class="buy">{{ item.globalReleased | isnowplaying }}</div>
-                </div>
+                </van-cell>
             </div>
         </van-list>
         <main>

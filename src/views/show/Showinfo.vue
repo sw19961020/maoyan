@@ -1,7 +1,7 @@
 <template>
     <div id="all" ref="sw">
-        <div class="head">
-            <ul class="tabbar">
+        <div class="head" ref="scroll">
+            <ul v-position class="tabbar">
                 <router-link tag="li" active-class="nowChoose" to="/show/showinfo/all">全部</router-link>
                 <router-link tag="li" active-class="nowChoose" to="/show/showinfo/singing">演唱会</router-link>
                 <router-link tag="li" active-class="nowChoose" to="/show/showinfo/opera">话剧歌剧</router-link>
@@ -22,23 +22,32 @@
 </template>
 
 <script>
-// import Vue from 'vue'
-// import BetterScroll from 'better-scroll'
-// Vue.directive('position',{
-//     inserted(el){
-//         var lis = document.querySelectorAll('#tabbar li')
-//         for( let i=0;i<lis.length;i++ ){
-//             lis[i].onclick = function(){
-//                 if( i < lis.length - 3 ){
-//                     el.style.left = -i * lis[0].clientWidth + 'px'
-//                 }
-//             }
-//         }
-//     }
-// })
+import Vue from 'vue'
+import BetterScroll from 'better-scroll'
+Vue.directive('position', {
+  inserted (el) {
+    var lis = document.querySelectorAll('.tabbar li')
+    for (let i = 0; i < lis.length; i++) {
+      lis[i].onclick = function () {
+        if (i < lis.length - 3) {
+          el.style.transform = 'translateX(' + -i * lis[0].clientWidth + 'px)'
+        }
+      }
+    }
+  }
+})
 export default {
   mounted () {
-    // new BetterScroll('.head')
+    this.init()
+  },
+  methods: {
+    init () {
+      new BetterScroll(this.$refs.scroll, {
+        scrollX: true,
+        click: true,
+        probeType: 3
+      })
+    }
   }
 }
 </script>
@@ -51,7 +60,7 @@ export default {
     }
     .head{
         width: 100%;
-        overflow-x: auto;
+        overflow-x: hidden;
         height: 40px;
         position: relative;
         .tabbar{
@@ -63,11 +72,8 @@ export default {
             height: 40px;
             line-height: 40px;
             width: auto;
-            // width: 1000px;
-            // justify-content: space-around;
             overflow: auto;
             li{
-                // flex: 1;
                 width: 94px;
                 text-align: center;
                 &.nowChoose{
