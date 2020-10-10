@@ -1,8 +1,8 @@
 <template>
   <div class="swiper-container" :class="swiperclass" >
-    <div class="swiper-wrapper" >
-        <slot></slot>
-    </div>
+    <ul class="swiper-wrapper" >
+     <slot name="slide"></slot>
+    </ul>
   </div>
 </template>
 <script>
@@ -23,10 +23,16 @@ export default {
   mounted () {
     // console.log(this.swiperclass)
     this.$nextTick(() => {
-      new Swiper('.' + this.swiperclass, {
+      new Swiper('.swiper-container', {
         slidesPerView: this.perslide,
-        spaceBetween: 10,
-        freeMode: true
+        spaceBetween: 0,
+        centeredSlides: true,
+        freeMode: true,
+        loop: false
+        // pagination: {
+        //   el: '.swiper-pagination',
+        //   clickable: true
+        // }
       })
     })
   }
@@ -35,8 +41,10 @@ export default {
 
 <style lang="scss" scoped>
 // .swiper-wrapper{
+//   width: 100%;
 //   img{
 //     width:100%;
+//     height:64px;
 //   }
 // }
 </style>

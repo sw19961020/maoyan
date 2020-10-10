@@ -1,11 +1,15 @@
 <template>
 
-    <div id="Al" v-if='singList.length'>
-            <singing-swiper :perslide="3" class="swiper">
-            <img src="https://img.meituan.net/kylisean/33745a87c0c12920c18965281b9329e299270.jpg@750w_150h_1c_1e" class="swiper-slide"/>
-            <img src="https://img.meituan.net/kylisean/5dded0f08884732f47c48714efca0ef220741.jpg@750w_150h_1c_1e" class="swiper-slide"/>
-            <img src="https://img.meituan.net/kylisean/be7b27224561bf5b5068c87737e961e889823.jpg@750w_150h_1c_1e" class="swiper-slide"/>
+    <div id="Al" >
+            <div class="swiper" v-if='imgList.length'>
+            <singing-swiper :perslide="3">
+            <template slot="slide">
+             <li class="swiper-slide" v-for="(data,index) in imgList" :key="index" slot="slide">
+              <img :src="data" />
+             </li>
+            </template>
             </singing-swiper>
+            </div>
              <van-list
              v-model="loading"
              :finished="finished"
@@ -45,6 +49,11 @@ export default {
       singList: [],
       loading: false,
       finished: false,
+      imgList: [
+        'https://img.meituan.net/kylisean/33745a87c0c12920c18965281b9329e299270.jpg@750w_150h_1c_1e',
+        'https://img.meituan.net/kylisean/5dded0f08884732f47c48714efca0ef220741.jpg@750w_150h_1c_1e',
+        'https://img.meituan.net/kylisean/be7b27224561bf5b5068c87737e961e889823.jpg@750w_150h_1c_1e'
+      ],
       p: 1
     }
   },
@@ -80,7 +89,25 @@ export default {
 <style lang="scss" scoped>
 *{padding:0;margin:0}
 #Al{
-    // margin-top:50px;
+
+      .swiper {
+        height: 64px;
+        width: 300%;
+        ul{
+          height: 64px;
+          overflow: hidden;
+        }
+      }
+      .swiper img{
+        height: 64px;
+        width:300%;
+      }
+      .swiper li{
+        height: 64px;
+        float: left;
+        width: 300%;
+      }
+
     .all{
         width: 100%;
         height:165px;
@@ -98,7 +125,7 @@ export default {
             float:left;
             h3{
                 width:176px;
-                height:40px;
+                height:50px;
                 // overflow: hidden;
                 // text-overflow: ellipsis;
                 // white-space:pre-wrap;
@@ -129,7 +156,7 @@ export default {
             .p3{
                 width:180px;
                 height:20px;
-                margin-top:25px;
+                margin-top:15px;
                 .s1{
                  display:block;
                  width:48px;

@@ -7,6 +7,8 @@ import Detail from '../views/Detail.vue'
 import Center from '../views/Center.vue'
 import Login from '../views/Login.vue'
 import Show from '../views/Show.vue'
+import Smallview from '../views/Smallview.vue'
+import Smalldetial from '../views/small/Smalldetial.vue'
 import Buy from '../views/show/Buy.vue'
 import Index from '../views/show/Index.vue'
 import Showcity from '../views/show/Showcity.vue'
@@ -141,7 +143,7 @@ const routes = [
           },
           {
             path: '',
-            redirect: '/show/showinfo/all'
+            redirect: '/show/showinfo/singing'
           }
         ]
       },
@@ -153,8 +155,16 @@ const routes = [
     ]
   },
   {
-    path: '/detail',
+    path: '/detail:id',
     component: Detail
+  },
+  {
+    path: '/smallview',
+    component: Smallview
+  },
+  {
+    path: '/smalldetial',
+    component: Smalldetial
   },
   {
     path: '/city',
@@ -185,7 +195,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => { // 全局守卫
-  const aupath = ['/center']
+  const aupath = ['/center', '/show/buy']
   if (aupath.includes(to.fullPath)) {
     if (!localStorage.getItem('username')) {
       next('/login')

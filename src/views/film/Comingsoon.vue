@@ -44,7 +44,7 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
+import http from '@/util/ajax'
 import Vue from 'vue'
 import comingsoonSwiper from '../swiper/ComingSoonSwiper'
 import { List, Cell } from 'vant'
@@ -83,7 +83,7 @@ export default {
       console.log(this.startCurrent, this.endCurrent)
 
       var newMoveID = this.movieIds.slice(this.startCurrent, this.endCurrent)
-      axios.get(`/ajax/moreComingList?ci=65&token=&limit=10&movieIds=${newMoveID.join('%2C')}&optimus_uuid=B8FA9760055D11EB8BC8D9E9097A01F9CCD7E7F88BCF4F8785DECF8F7D4184EB&optimus_risk_level=71&optimus_code=10`).then(res => {
+      http.get(`/moreComingList?ci=65&token=&limit=10&movieIds=${newMoveID.join('%2C')}&optimus_uuid=B8FA9760055D11EB8BC8D9E9097A01F9CCD7E7F88BCF4F8785DECF8F7D4184EB&optimus_risk_level=71&optimus_code=10`).then(res => {
         this.comingList = [...this.comingList, ...res.data.coming]
         console.log(this.comingList)
         this.loading = false
@@ -104,11 +104,11 @@ export default {
     comingsoonSwiper
   },
   mounted () {
-    axios.get('/ajax/mostExpected?ci=65&limit=10&offset=0&token=&optimus_uuid=836FEBC00A0011EB8D4303BFEF63A30F89399AC08A3A4DDB9AEE9AF4D9BA15ED&optimus_risk_level=71&optimus_code=10').then(res => {
+    http.get('/mostExpected?ci=65&limit=10&offset=0&token=&optimus_uuid=836FEBC00A0011EB8D4303BFEF63A30F89399AC08A3A4DDB9AEE9AF4D9BA15ED&optimus_risk_level=71&optimus_code=10').then(res => {
       this.expectedList = res.data.coming
       console.log(this.expectedList, res, 1234)
     })
-    axios.get('/ajax/comingList?ci=65&token=&limit=10&optimus_uuid=836FEBC00A0011EB8D4303BFEF63A30F89399AC08A3A4DDB9AEE9AF4D9BA15ED&optimus_risk_level=71&optimus_code=10').then(res => {
+    http.get('/comingList?ci=65&token=&limit=10&optimus_uuid=836FEBC00A0011EB8D4303BFEF63A30F89399AC08A3A4DDB9AEE9AF4D9BA15ED&optimus_risk_level=71&optimus_code=10').then(res => {
       this.comingList = res.data.coming
       this.movieIds = res.data.movieIds
     })
@@ -116,10 +116,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-*{padding:0;margin:0}
 #all{
     width:100%;
-    height:100%;
+    height: 100%;
     background:#e7e5e5;
     margin-bottom:50px;
     margin-top:40px;

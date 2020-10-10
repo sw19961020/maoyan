@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-view></router-view>
+        小视频详情
     </div>
 </template>
 

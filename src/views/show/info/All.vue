@@ -89,7 +89,7 @@ export default {
             float:left;
             h3{
                 width:176px;
-                height:40px;
+                height:50px;
                 // overflow: hidden;
                 // text-overflow: ellipsis;
                 // white-space:pre-wrap;
@@ -120,7 +120,7 @@ export default {
             .p3{
                 width:180px;
                 height:20px;
-                margin-top:25px;
+                margin-top:15px;
                 .s1{
                  display:block;
                  width:48px;
