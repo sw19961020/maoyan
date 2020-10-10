@@ -10,6 +10,7 @@
 <script>
 import Vue from 'vue'
 import tabbar from './components/Tabbar'
+// import FilmTabbar from './components/FilmTabbar'
 Vue.component('tabbar', tabbar) // 注册组件
 export default {
 
@@ -36,23 +37,75 @@ export default {
     width: 100%;
     #bom{
       position: fixed;
+      z-index: 20;
       bottom: 0;
       width: 100%;
     }
   }
-  .line-ellipsis::after{
-    content: '';
-    height: 0;
-    display: block;
+    .top-rated-list{
+        display: flex;
+    }
+    .top-rated{
+        // position: relative;
+        // p{
+        //   top: 0;
+        //   z-index: 10;
+        //   position: absolute;
+        // }
+        display: flex;
+        flex-direction: column;
+
+    }
+    .top-rated-item{
+        flex: 1;
+        .line-ellipsis{
+          width: 100px;
+          margin: 10px;
+          font-size: 13px;
+          text-align: center;
+        }
+        .poster{
+            height: 130px;
+            position: relative;
+            margin: 10px;
+            img{
+              width: 100px;
+             height: 130px;
+            }
+            .score,.wish{
+              position: absolute;
+              left: 0;
+              background-color: rgba($color: #333333, $alpha: .5);
+              font-size: 13px;
+              text-align: center;
+              color: orange;
+              font-weight: bold;
+              bottom: 0;
+              z-index: 10;
+              width: 100px;
+            }
+        }
+    }
+.top-rated{
+        p{
+            &.title{
+                margin-left: 10px;
+            }
+        }
+    .line-ellipsis::after{
+      content: '';
+      height: 0;
+      display: block;
+    }
+    .line-ellipsis{
+      .price-block{
+        color: red;
+      }
+      .q{
+        font-size: 13px;
+        margin-left: 3px;
+      }
   }
-  .line-ellipsis{
-    .price-block{
-      color: red;
-    }
-    .q{
-      font-size: 13px;
-      margin-left: 3px;
-    }
 }
 .title:nth-child(1){
       color: #000;
@@ -93,9 +146,9 @@ export default {
         color: #589daf;
         border: 1px solid #589daf;
         border-radius: 2px;
-        font-size: 12px;
+        font-size: 10px;
         padding: 2px;
-        margin-right: 6px;
+        margin-right: 5px;
       }
       .snack, .vipTag{
         color: #f90;
@@ -121,7 +174,7 @@ export default {
       }
       .discount-label-text{
         color: #999;
-        flex: 10;
+        flex: 13;
       }
     }
 </style>

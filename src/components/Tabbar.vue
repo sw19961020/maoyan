@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="gs">
         <ul>
             <router-link tag="li" active-class="nowChoose" to="/film">电影/影院</router-link>
             <li>视频</li>
@@ -12,13 +12,12 @@
 
 <style scoped lang="scss">
     div{
-        width: 100%;
+        background-color: #eee;
         ul{
             display: flex;
             height: 50px;
             width: 100%;
             line-height: 50px;
-            background: #eee;
             li{
                 flex: 1;
                 text-align: center;
