@@ -109,7 +109,7 @@ export default {
             }
             .p2{
                 width:200px;
-                height:16px;
+                height:18px;
                 color:#888888;
                 overflow: hidden;
                 text-overflow: ellipsis;
