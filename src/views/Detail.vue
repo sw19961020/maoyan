@@ -1,50 +1,68 @@
 <template>
     <div v-if="detailMovie">
-            <div id="header">{{detailMovie.nm}}</div>
-            <div id="detailMask">
-                <div class="mask">
-                    <div class="detailImg"><img :src="detailMovie.img | imgFilter"></div>
-                    <div class="detailInfo">
-                        <div class="nm">{{detailMovie.nm}}</div>
-                        <div class="sc">{{detailMovie.sc}} <span>（{{detailMovie.wish}}人评）</span></div>
-                        <div class="cat">{{detailMovie.cat}}</div>
-                        <div class="src">{{detailMovie.src}}/{{detailMovie.dur}}分钟</div>
-                        <div class="pubDesc">{{detailMovie.pubDesc}}</div>
-                    </div>
-                </div>
-                <div class="detailHeader" :style="'background-image:url('+Bgfilter()+')'">
+        <!-- detailHeader -->
+        <div id="header">{{detailMovie.nm}}</div>
+        <div id="detailMask">
+            <div class="mask">
+                <div class="detailImg"><img :src="detailMovie.img"></div>
+                <div class="detailInfo">
+                    <div class="nm">{{detailMovie.nm}}</div>
+                    <div class="enm">{{detailMovie.enm}}</div>
+                    <div class="sc"  v-if="detailMovie.globalReleased === true">{{detailMovie.sc}}<span>（{{detailMovie.wish}}人评）</span></div>
+                    <div class="sc"  v-if="detailMovie.globalReleased === false">{{detailMovie.wish}}人想看</div>
+                    <div class="cat">{{detailMovie.cat}}</div>
+                    <div class="src">{{detailMovie.src}}/{{detailMovie.dur}}分钟</div>
+                    <div class="pubDesc">{{detailMovie.pubDesc}}</div>
                 </div>
             </div>
+            <div class="detailHeader" :style="'background-image:url('+ Bgfilter() +')'"></div>
+        </div>
+        <!-- cinemaList -->
+        <div id="showDays"  v-if="showDaysDates !== []">
+            <ul id="timeline">
+                <li v-for="day in showDaysDates" :key="day.date" class="showDay active">{{day.date | dateFilter}}</li>
+            </ul>
+        </div>
+        <div></div>
     </div>
 </template>
 <script>
-import axios from 'axios'
+import http from '../util/ajax'
 import Vue from 'vue'
-Vue.filter('imgFilter', (img) => {
-  return img.replace(/w.h/, '/110.150/')
-})
-Vue.filter('BgFilter', (img) => {
-  return img.replace(/w.h/, '/9999.9999/')
+import moment from 'moment'
+Vue.filter('dateFilter', (data) => { // 处理日期格式
+//   return data.substring(0, 4).replace(moment().format())
 })
 export default {
   data () {
     return {
-      detailMovie: null
+      detailMovie: null,
+      showDaysDates: []
     }
   },
   methods: {
     Bgfilter () {
-      return this.detailMovie.img.replace(/w.h/, '/9999.9999/')
+      return this.detailMovie.img.replace(/w.h/, '/2000.2000/')
     }
   },
   mounted () {
-    // console.log(this.$route.params)
-    // 这里拿到通过热映页传过来的ID通过this.$route.params.id动态渲染
-    axios.get(`/ajax/detailmovie?movieId=${this.$route.params.id}&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10`
+    // 拿到通过热映页传过来的ID通过this.$route.params.id动态渲染
+    http.get(`/detailmovie?movieId=${this.$route.params.id}&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10`
     ).then(res => {
-      console.log(res.data.detailMovie)
       this.detailMovie = res.data.detailMovie
+      this.detailMovie.img = this.detailMovie.img.replace('/w.h/', '/110.150/')
     })
+
+    /* detailListData */
+    http.post('/movie?forceUpdate=1602317257862', 'movieId=1211269&day=2020-10-10&offset=0&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602318135135&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10').then(res => {
+      console.log(res.data.cinemas, res.data.showDays.dates)
+      this.showDaysDates = res.data.showDays.dates
+    })
+  },
+  computed: {
+    get () {
+      return moment().format()
+    }
   }
 }
 </script>
@@ -69,9 +87,10 @@ export default {
         position: absolute;
         display: flex;
             z-index: 10;
-            background: #000;
-            opacity: .8;
+            background: rgb(32, 30, 30);
+            opacity: .9;
             .detailImg{
+            overflow: hidden;
             z-index: 20;
             flex: 1;
             margin-left: 20px;
@@ -82,9 +101,14 @@ export default {
             margin-left: 15px;
             font-weight: bold;
             color: #fff;
+            .enm{
+                font-size: 10px;
+                font-weight: normal;
+                margin-bottom: 5px;
+                color: gray;
+            }
             .nm{
-                font-size: 20px;
-                margin-bottom: 20px;
+                margin-bottom: 10px;
             }
             .cat{
                 color: gray;
@@ -120,5 +144,15 @@ export default {
         background-position: center;
         height: 217px;
         z-index: 1;
+    }
+    /* dateListData */
+    #showDays{
+        height: 100px;
+        background: #ff0;
+    }
+    #showDays::after{
+        content: '';
+        display: block;
+        height: 0;
     }
 </style>
