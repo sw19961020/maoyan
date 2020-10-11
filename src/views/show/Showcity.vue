@@ -13,6 +13,7 @@
 import Vue from 'vue'
 import http from '@/util/ajax.js'
 import { IndexBar, IndexAnchor, Toast, Cell } from 'vant'
+// import { mapState } from 'vuex'
 Vue.use(IndexBar)
 Vue.use(IndexAnchor).use(Cell)
 export default {
