@@ -91,7 +91,7 @@ export default {
 
       .swiper {
         height: 64px;
-        width: 300%;
+        width: 100%;
         ul{
           height: 64px;
           overflow: hidden;
@@ -99,12 +99,12 @@ export default {
       }
       .swiper img{
         height: 64px;
-        width:300%;
+        width:100%;
       }
       .swiper li{
         height: 64px;
         float: left;
-        width: 300%;
+        width: 100%;
       }
 
     .all{

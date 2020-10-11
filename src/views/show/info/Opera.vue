@@ -1,7 +1,14 @@
 <template>
 
     <div id="Al" >
-            <div class="swiper">
+            <div class="swiper" v-if='imgList.length'>
+            <singing-swiper :perslide="3">
+            <template slot="slide">
+             <li class="swiper-slide" v-for="(data,index) in imgList" :key="index" slot="slide">
+              <img :src="data" />
+             </li>
+            </template>
+            </singing-swiper>
             </div>
              <van-list
              v-model="loading"
@@ -33,7 +40,7 @@
 import http from '@/util/ajax.js'
 import Vue from 'vue'
 import { List, Cell } from 'vant'
-
+import SingingSwiper from '../../swiper/SingingSwiper'
 Vue.use(List).use(Cell)
 export default {
   data () {
@@ -41,6 +48,9 @@ export default {
       singList: [],
       loading: false,
       finished: false,
+      imgList: [
+        'https://img.meituan.net/kylisean/6a47ac90a35e0ab56de80a565d09ec5546855.jpg@750w_150h_1c_1e'
+      ],
       p: 1
     }
   },
@@ -54,6 +64,9 @@ export default {
         this.loading = false
       })
     }
+  },
+  components: {
+    SingingSwiper
   },
   mounted () {
     console.log(123)
@@ -73,12 +86,22 @@ export default {
 <style lang="scss" scoped>
 *{padding:0;margin:0}
 #Al{
-
       .swiper {
-        height: 75px;
+        height: 64px;
         width: 100%;
-        background-image:url(https://img.meituan.net/kylisean/6a47ac90a35e0ab56de80a565d09ec5546855.jpg@750w_150h_1c_1e);
-        background-size:100%;
+        ul{
+          height: 64px;
+          overflow: hidden;
+        }
+      }
+      .swiper img{
+        height: 64px;
+        width:100%;
+      }
+      .swiper li{
+        height: 64px;
+        float: left;
+        width: 100%;
       }
 
     .all{
