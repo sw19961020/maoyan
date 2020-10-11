@@ -4,15 +4,15 @@
 
                 <van-cell v-for="(data,index) in allList" :key="index" >
                 <div class="all">
-                <img :src=" data.posterUrl"/>
+                <img :src=" data.goodsImg"/>
                 <div class="body">
-                <h3>{{data.name}}</h3>
+                <h3>{{data.goodsName}}</h3>
                 <p class="p1">{{data.showTimeRange}}</p>
                 <p class="p2">{{data.shopName}}</p>
                 <p class="p3">
-                    <span class="s1">售票中</span>
-                    <span class="s2">{{data.priceRange}}元</span>
-                    <span class="s3">自营</span>
+                    <span class="s1">{{data.sellPrice}}￥</span>
+                    <span class="s2">￥{{data.originPrice}}</span>
+                    <span class="s3">去购买</span>
                 </p>
                 </div>
                 </div>
@@ -22,7 +22,8 @@
 
 </template>
 <script>
-import http from '@/util/ajax.js'
+// import http from '@/util/ajax.js'
+import axios from 'axios'
 import Vue from 'vue'
 import { List, Cell } from 'vant'
 
@@ -39,12 +40,12 @@ export default {
   mounted () {
     console.log(123)
 
-    http({
-      url: 'https://show.maoyan.com/maoyansh/myshow/ajax/derivation/list?sellChannel=13&cityId=1&lng=0&lat=0',
-      method: 'post'
+    axios({
+      url: '/items.json',
+      method: 'get'
     }).then(res => {
-      console.log(res.data.data)
-      this.allList = res.data.data
+      console.log(res.data)
+      this.allList = res.data.data_list
     })
   }
 
@@ -82,6 +83,7 @@ export default {
                 -webkit-line-clamp:2;
                 font-size:16px;
                 color:#111111;
+                font-weight:normal
             }
             .p1{
                 width:180px;
@@ -105,23 +107,25 @@ export default {
                 height:20px;
                 margin-top:15px;
                 .s1{
-                 display:block;
-                 width:48px;
-                 height:17px;
-                 line-height:17px;
-                 background:pink;
                  color:red;
-                 margin:0px 3px -1px 0px;
-                 padding:1px 3px;
                  float:left;
+                 font-size:17px;
                 }
                 .s2{
-                    font-size:13px;
+                    font-size:12px;
+                    color:#999999;
+                    text-decoration:line-through;
                 }
                 .s3{
                     float:right;
-                    color:#cccccc;
-                    font-size:12px;
+                    color:#ffffff;
+                    font-size:14px;
+                    display: block;
+                    width:67px;
+                    height:27px;
+                    background:#FC2041;
+                    text-align: center;
+                    border-radius:25px;
                 }
             }
         }
