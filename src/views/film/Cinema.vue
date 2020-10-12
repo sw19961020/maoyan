@@ -26,19 +26,28 @@ export default {
   mounted () {
     http.get('/moreCinemas?day=2020-10-12&offset=0&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602207254355&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10').then((res) => {
       this.hotDom = res.data
+      console.log(res, 22222)
     })
   },
   methods: {
     onLoad () {
+      if (this.current === 5) {
+        this.finished = true
+        return
+      }
       this.current++
       http.get(`/moreCinemas?day=2020-10-12&offset=${this.current * 20}&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602207254355&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10`).then((res) => {
+        // console.log(res.data, 11111111)
         this.hotDom += res.data
         this.loading = false
-        if (res.data === '') {
-          this.finished = true
-        }
       })
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+  .van-list{
+    margin-top: 40px;
+    margin-bottom: 50px;
+  }
+</style>

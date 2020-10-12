@@ -67,7 +67,7 @@ export default {
     })
 
     /* detailListData */
-    http.post('/movie?forceUpdate=1602317257862', 'movieId=1328712&day=2020-10-11&offset=0&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602405053498&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10').then(res => {
+    http.post('/movie?forceUpdate=1602317257862', `movieId=${this.$route.params.id}&day=2020-10-12&offset=0&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602405053498&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10`).then(res => {
       console.log(res.data.cinemas, res.data.showDays.dates)
       this.showDaysDates = res.data.showDays.dates
       this.cinemaList = res.data.cinemas
@@ -79,10 +79,10 @@ export default {
     },
     onLoad () {
       this.current++
-      http.post('/movie?forceUpdate=1602317257862', `movieId=1328712&day=2020-10-11&offset=${this.current * 20}&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602405053498&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10`).then(res => {
-        this.cinemaList = res.data.cinemas
+      http.post('/movie?forceUpdate=1602317257862', `movieId=${this.$route.params.id}&day=2020-10-12&offset=${this.current * 20}&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602405053498&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10`).then(res => {
+        this.cinemaList += res.data.cinemas
         this.loading = false
-        if (res.data.cinemas === []) {
+        if (res.data.cinemas.length === 0) {
           this.finished = true
         }
       })
