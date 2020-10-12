@@ -3,7 +3,7 @@
         <div class="head">
             <p>
                 <span @click="citypage">{{ cityName }}</span>
-                <van-icon name="arrow-down" color="black" />
+                <van-icon name="arrow-down" color="black"/>
             </p>
             <van-search v-model="value" placeholder="请输入搜索关键词" style="width:300px;"/>
         </div>
@@ -16,6 +16,9 @@
                 <p>{{ data.name }}</p>
             </li>
         </ul>
+        <div class="more">
+            <router-link tag="div" to="/show/more">更多</router-link>
+        </div>
             <van-cell v-for="item in showList" :key="item.shopName" :title="item.shopName"/>
         <ul class="bom">
             <router-link tag="li" active-class="nowChoose" to="/show/index">
@@ -25,6 +28,10 @@
             <router-link tag="li" active-class="nowChoose" to="/show/buy">
                 <i class="iconfont icon-form"></i>
                 <span>订单</span>
+            </router-link>
+            <router-link tag="li" active-class="nowChoose" to="/film">
+                <i class="iconfont icon-close"></i>
+                <span>返回</span>
             </router-link>
         </ul>
     </div>
@@ -85,6 +92,14 @@ export default {
             width: 80px;
             text-align: center;
         }
+    }
+    .more{
+        margin: 20px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 25px;
+        background-color: coral;
     }
     .index{
         margin-top: 20px;

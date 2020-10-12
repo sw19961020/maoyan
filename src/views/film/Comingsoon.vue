@@ -76,7 +76,6 @@ export default {
       return path.replace('w.h', '')
     },
     onLoad () {
-      console.log('到底了')
       //   this.current++ve
       this.startCurrent += 10
       this.endCurrent += 10
@@ -117,6 +116,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 #all{
+    overflow-x: hidden;
     width:100%;
     height: 100%;
     background:#e7e5e5;
