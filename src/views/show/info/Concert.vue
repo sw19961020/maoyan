@@ -31,7 +31,7 @@
 import http from '@/util/ajax.js'
 import Vue from 'vue'
 import { List, Cell } from 'vant'
-
+import { mapState } from 'vuex'
 Vue.use(List).use(Cell)
 export default {
   data () {
@@ -43,6 +43,9 @@ export default {
       p: 1
     }
   },
+  computed: {
+    ...mapState('showcityModule', ['cityId'])
+  },
   methods: {
     onLoad () {
       if (this.allList.length === this.total) {
@@ -51,7 +54,7 @@ export default {
       }
       console.log('到底了')
       this.p++
-      http.get(`https://show.maoyan.com/maoyansh/myshow/ajax/performances/6;st=0;p=${this.p};s=20;tft=0;marketLevel=0?sellChannel=13&cityId=1&lng=0&lat=0`).then(res => {
+      http.get(`https://show.maoyan.com/maoyansh/myshow/ajax/performances/6;st=0;p=${this.p};s=20;tft=0;marketLevel=0?sellChannel=13&cityId=${this.cityId}&lng=0&lat=0`).then(res => {
         this.allList = [...this.allList, ...res.data.data]
         console.log(this.allList)
         this.loading = false
@@ -62,7 +65,7 @@ export default {
     console.log(123)
 
     http({
-      url: 'https://show.maoyan.com/maoyansh/myshow/ajax/performances/6;st=0;p=1;s=20;tft=0;marketLevel=0?sellChannel=13&cityId=1&lng=0&lat=0',
+      url: `https://show.maoyan.com/maoyansh/myshow/ajax/performances/6;st=0;p=1;s=20;tft=0;marketLevel=0?sellChannel=13&cityId=${this.cityId}&lng=0&lat=0`,
       method: 'get'
     }).then(res => {
       console.log(res.data.data)
