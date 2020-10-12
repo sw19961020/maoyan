@@ -1,7 +1,6 @@
 <template>
     <div v-ht class="all" v-if='hotDom'>
         <header>
-            <!-- <p v-html='hotDom'></p> -->
             <now-swiper v-model="hotDom" v-if="isshow"></now-swiper>
             <ol>
                 <li>
