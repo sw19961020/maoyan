@@ -1,0 +1,4 @@
+diff a/src/views/show/Index.vue b/src/views/show/Index.vue	(rejected hunks)
+@@ -31 +31 @@
+-            </router-link>            
++            </router-link>
