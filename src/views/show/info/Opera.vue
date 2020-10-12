@@ -48,6 +48,7 @@ export default {
       singList: [],
       loading: false,
       finished: false,
+      total: 53,
       imgList: [
         'https://img.meituan.net/kylisean/6a47ac90a35e0ab56de80a565d09ec5546855.jpg@750w_150h_1c_1e'
       ],
@@ -56,9 +57,13 @@ export default {
   },
   methods: {
     onLoad () {
+      if (this.singList.length === this.total) {
+        this.finished = true
+        return
+      }
       console.log('到底了')
       this.p++
-      http.get(`https://show.maoyan.com/maoyansh/myshow/ajax/performances/4;st=0;p=;${this.p}s=20;tft=0;marketLevel=0?sellChannel=13&cityId=1&lng=0&lat=0`).then(res => {
+      http.get(`https://show.maoyan.com/maoyansh/myshow/ajax/performances/4;st=0;p=${this.p};s=20;tft=0;marketLevel=0?sellChannel=13&cityId=1&lng=0&lat=0`).then(res => {
         this.singList = [...this.singList, ...res.data.data]
         console.log(this.singList)
         this.loading = false
@@ -77,6 +82,7 @@ export default {
     }).then(res => {
       console.log(res.data.data)
       this.singList = res.data.data
+      this.total = res.data.paging.totalHits
     })
   }
 

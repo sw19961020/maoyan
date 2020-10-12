@@ -39,11 +39,16 @@ export default {
       allList: [],
       loading: false,
       finished: false,
-      p: 1
+      p: 1,
+      total: 0
     }
   },
   methods: {
     onLoad () {
+      if (this.allList.length === this.total) {
+        this.finished = true
+        return
+      }
       console.log('到底了')
       this.p++
       http.get(`https://show.maoyan.com/maoyansh/myshow/ajax/performances/0;st=0;p=${this.p};s=20;tft=0;marketLevel=0?sellChannel=13&cityId=1&lng=0&lat=0`).then(res => {
@@ -62,6 +67,7 @@ export default {
     }).then(res => {
       console.log(res.data.data)
       this.allList = res.data.data
+      this.total = res.data.paging.totalHits
     })
   }
 

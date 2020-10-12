@@ -33,7 +33,8 @@ export default {
       list: null,
       loading: false,
       finished: false,
-      offset: 10
+      offset: 10,
+      total: 40
     }
   },
   mounted () {
@@ -44,6 +45,10 @@ export default {
   },
   methods: {
     onLoad () {
+      if (this.classicList.length === this.total) {
+        this.finished = true
+        return
+      }
       console.log('到底了e')
       //   this.current++
       this.offset += 10

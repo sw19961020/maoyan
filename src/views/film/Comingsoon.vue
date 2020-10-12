@@ -68,7 +68,8 @@ export default {
       startCurrent: 0,
       movieIds: [],
       endCurrent: 10,
-      offset: 0
+      offset: 0,
+      total: 114
     }
   },
   methods: {
@@ -76,6 +77,10 @@ export default {
       return path.replace('w.h', '')
     },
     onLoad () {
+      if (this.comingList.length === this.total) {
+        this.finished = true
+        return
+      }
       console.log('到底了')
       //   this.current++ve
       this.startCurrent += 10
