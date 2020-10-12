@@ -3,7 +3,7 @@
         <van-index-bar :index-list="cityletter" @select="handleClick">
             <div v-for="(data,index) in cityList" :key="index">
                 <van-index-anchor :index="data.type"></van-index-anchor>
-                <van-cell v-for="item in data.list" :key="item.nm" :title="item.nm"/>
+                <van-cell v-for="item in data.list" :key="item.nm" :title="item.nm" @click="cityedit(item.nm , item.id)"/>
             </div>
         </van-index-bar>
     </div>
@@ -13,7 +13,7 @@
 import Vue from 'vue'
 import http from '@/util/ajax.js'
 import { IndexBar, IndexAnchor, Toast, Cell } from 'vant'
-// import { mapState } from 'vuex'
+import { mapMutations } from 'vuex'
 Vue.use(IndexBar)
 Vue.use(IndexAnchor).use(Cell)
 export default {
@@ -31,6 +31,7 @@ export default {
     })
   },
   methods: {
+    ...mapMutations('showcityModule', ['setcityName', 'setcityId']),
     cityinfo (datalist) {
       const letterArray = []
       for (let code = 65; code < 91; code++) {
@@ -50,6 +51,11 @@ export default {
     },
     handleClick (index) {
       Toast(index)
+    },
+    cityedit (name, id) {
+      this.setcityName(name)
+      this.setcityId(id)
+      this.$router.push('/show/index')
     }
   },
   computed: {

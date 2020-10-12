@@ -6,7 +6,12 @@ const module = {
     cityId: '1'
   },
   mutations: {
-
+    setcityName (state, name) {
+      state.cityName = name
+    },
+    setcityId (state, id) {
+      state.cityId = id
+    }
   },
   actions: {
 

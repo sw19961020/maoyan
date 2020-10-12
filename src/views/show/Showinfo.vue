@@ -1,5 +1,9 @@
 <template>
     <div id="all" ref="sw">
+        <div class="search">
+            <span @click="back"><i class="iconfont icon-back"></i> 返回</span>
+            <van-search v-model="value" placeholder="请输入搜索关键词" style="width:300px;"/>
+        </div>
         <div class="head" ref="scroll">
             <ul v-position class="tabbar">
                 <router-link tag="li" active-class="nowChoose" to="/show/showinfo/all">全部</router-link>
@@ -26,6 +30,7 @@ import Vue from 'vue'
 import BetterScroll from 'better-scroll'
 Vue.directive('position', {
   inserted (el) {
+    var nowli = 0
     var lis = document.querySelectorAll('.tabbar li')
     for (let i = 0; i < lis.length; i++) {
       lis[i].onclick = function () {
@@ -33,10 +38,20 @@ Vue.directive('position', {
           el.style.transform = 'translateX(' + -i * lis[0].clientWidth + 'px)'
         }
       }
+      if (lis[i].className.includes('nowChoose')) {
+        nowli = i
+      }
     }
+    el.style.transform = 'translateX(' + -nowli * lis[0].clientWidth + 'px)'
   }
 })
 export default {
+  // props:['value'] ,
+  data () {
+    return {
+      value: ''
+    }
+  },
   mounted () {
     this.init()
   },
@@ -47,6 +62,9 @@ export default {
         click: true,
         probeType: 3
       })
+    },
+    back () {
+      this.$router.push('/show')
     }
   }
 }
@@ -57,6 +75,19 @@ export default {
         height: 100%;
         overflow: hidden;
         width: 100%;
+    }
+    .search{
+      display: flex;
+      height: 50px;
+      line-height: 50px;
+      span{
+        width: 80px;
+        text-align: center;
+        i{
+          color: blue;
+          font-size: 18px;
+        }
+      }
     }
     .head{
         width: 100%;

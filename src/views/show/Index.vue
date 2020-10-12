@@ -8,9 +8,15 @@
             <van-search v-model="value" placeholder="请输入搜索关键词" style="width:300px;"/>
         </div>
 
-        <router-link tag="div" to="/show/showinfo" style="height: 50px;background:blue;">详细</router-link>
-        <!-- <router-link tag="div" to="/show/showcity" style="height: 50px;background:red;">城市</router-link> -->
-        <router-link tag="div" to="/show/more" style="height: 50px;background:green;">更多</router-link>
+        <!-- <router-link tag="div" to="/show/showinfo" style="height: 50px;background:blue;">详细</router-link>
+        <router-link tag="div" to="/show/more" style="height: 50px;background:green;">更多</router-link> -->
+        <ul class="index">
+            <li v-for="(data,index) in imgList" :key="index" @click="gotoList(data.goto)">
+                <img :src="data.img">
+                <p>{{ data.name }}</p>
+            </li>
+        </ul>
+            <van-cell v-for="item in showList" :key="item.shopName" :title="item.shopName"/>
         <ul class="bom">
             <router-link tag="li" active-class="nowChoose" to="/show/index">
                 <i class="iconfont icon-favorite"></i>
@@ -27,21 +33,43 @@
 <script>
 import Vue from 'vue'
 import { Search, NavBar, Icon } from 'vant'
-import { mapState } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 Vue.use(Search).use(NavBar).use(Icon)
+
 export default {
   data () {
     return {
-      value: ''
+      value: '',
+      imgList: [{ img: 'https://img.meituan.net/kylisean/b132e8d30be554486b8c909c7d16f7c15282.png', name: '演唱会', goto: '/show/showinfo/singing' }, { img: 'https://img.meituan.net/kylisean/5cc92a5a6bb19618f7d2b31433a2a2f24956.png', name: '话剧歌剧', goto: '/show/showinfo/opera' }, { img: 'https://img.meituan.net/kylisean/2b3d5971c31e8a39e181bd07f3c42d824737.png', name: '休闲展览', goto: '/show/showinfo/exhibition' }, { img: 'https://img.meituan.net/kylisean/8d6764a0cee35332f44976f84b188c444767.png', name: '戏曲相声', goto: '/show/showinfo/art' }, { img: 'https://img.meituan.net/kylisean/cce8a904f6489abeff04f9d9555dd77f4052.png', name: '亲子/艺术', goto: '/show/showinfo/parenting' }]
     }
   },
   computed: {
-    ...mapState('showcityModule', ['cityName'])
+    ...mapState('showcityModule', ['cityName', 'cityId']),
+    ...mapState('showcinemaModule', ['cinemaList']),
+    showList () {
+      if (this.value === '') {
+        return []
+      }
+      return this.cinemaList.filter(item => item.address.toUpperCase().includes(this.value.toUpperCase()) || item.shopName.toUpperCase().includes(this.value.toUpperCase()))
+    }
   },
   methods: {
+    ...mapMutations('showcinemaModule', ['setcinemaList', 'clearcinemaList']),
+    ...mapActions('showcinemaModule', ['getcinemaList']),
     citypage () {
+      this.clearcinemaList()
       this.$router.push('/show/showcity')
+    },
+    gotoList (url) {
+      this.$router.push(url)
+    }
+  },
+  mounted () {
+    if (this.cinemaList.length === 0) {
+      this.getcinemaList(this.cityId)
+    } else {
+      console.log('放心走的是缓存，不消耗流量！！！')
     }
   }
 }
@@ -54,8 +82,25 @@ export default {
         line-height: 40px;
         p{
             margin-left: 10px;
-            width: 60px;
+            width: 80px;
             text-align: center;
+        }
+    }
+    .index{
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        li{
+            width: 20%;
+            flex: 1;
+            text-align: center;
+            img{
+                width: 80%;
+            }
+            p{
+                font-size: 14px;
+                color: #666;
+            }
         }
     }
     .bom{

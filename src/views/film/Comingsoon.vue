@@ -68,7 +68,8 @@ export default {
       startCurrent: 0,
       movieIds: [],
       endCurrent: 10,
-      offset: 0
+      offset: 0,
+      total: 1
     }
   },
   methods: {
@@ -76,10 +77,15 @@ export default {
       return path.replace('w.h', '')
     },
     onLoad () {
+      if (this.total === 12) {
+        this.finished = true
+        return
+      }
       console.log('到底了')
       //   this.current++ve
       this.startCurrent += 10
       this.endCurrent += 10
+      this.total++
       console.log(this.startCurrent, this.endCurrent)
 
       var newMoveID = this.movieIds.slice(this.startCurrent, this.endCurrent)
