@@ -17,19 +17,33 @@
             </div>
             <div class="detailHeader" :style="'background-image:url('+ Bgfilter() +')'"></div>
         </div>
-        <!-- cinemaList -->
+        <!-- showDays -->
         <div id="showDays"  v-if="showDaysDates !== []">
             <ul id="timeline">
                 <li v-for="day in showDaysDates" :key="day.date" class="showDay active">{{day.date | dateFilter}}</li>
             </ul>
         </div>
-        <div></div>
+        <!-- cinemaList -->
+        <div v-if="cinemaList.cinemas !== []">
+            <van-list
+            v-model="loading"
+            :finished="finished"
+            finished-text="我是有底线的"
+            @load="onLoad"
+            :immediate-check = "false"
+            >
+                <van-cell v-for="item in cinemaList" :key="item.id">
+                    <div>{{item.nm}}</div>
+                </van-cell>
+            </van-list>
+        </div>
     </div>
 </template>
 <script>
 import http from '../util/ajax'
 import Vue from 'vue'
-import moment from 'moment'
+import { List, Cell } from 'vant'
+Vue.use(List).use(Cell)
 Vue.filter('dateFilter', (data) => { // 处理日期格式
 //   return data.substring(0, 4).replace(moment().format())
 })
@@ -37,12 +51,11 @@ export default {
   data () {
     return {
       detailMovie: null,
-      showDaysDates: []
-    }
-  },
-  methods: {
-    Bgfilter () {
-      return this.detailMovie.img.replace(/w.h/, '/2000.2000/')
+      showDaysDates: [],
+      cinemaList: [],
+      loading: false, // 懒加载,是否正在加载中,防止多次触发
+      finished: false,
+      current: 1
     }
   },
   mounted () {
@@ -54,14 +67,25 @@ export default {
     })
 
     /* detailListData */
-    http.post('/movie?forceUpdate=1602317257862', 'movieId=1211269&day=2020-10-10&offset=0&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602318135135&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10').then(res => {
+    http.post('/movie?forceUpdate=1602317257862', 'movieId=1328712&day=2020-10-11&offset=0&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602405053498&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10').then(res => {
       console.log(res.data.cinemas, res.data.showDays.dates)
       this.showDaysDates = res.data.showDays.dates
+      this.cinemaList = res.data.cinemas
     })
   },
-  computed: {
-    get () {
-      return moment().format()
+  methods: {
+    Bgfilter () {
+      return this.detailMovie.img.replace(/w.h/, '/2000.2000/')
+    },
+    onLoad () {
+      this.current++
+      http.post('/movie?forceUpdate=1602317257862', `movieId=1328712&day=2020-10-11&offset=${this.current * 20}&limit=20&districtId=-1&lineId=-1&hallType=-1&brandId=-1&serviceId=-1&areaId=-1&stationId=-1&item=&updateShowDay=true&reqId=1602405053498&cityId=65&optimus_uuid=57114740078F11EBA119977D90BC8F7E76C42B80CE334F5986AD9102EAADDB4C&optimus_risk_level=71&optimus_code=10`).then(res => {
+        this.cinemaList = res.data.cinemas
+        this.loading = false
+        if (res.data.cinemas === []) {
+          this.finished = true
+        }
+      })
     }
   }
 }

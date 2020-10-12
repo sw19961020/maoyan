@@ -18,7 +18,7 @@
 
 </template>
 <script>
-import axios from 'axios'
+import http from '@/util/ajax'
 import Vue from 'vue'
 import { List, Cell } from 'vant'
 
@@ -37,7 +37,7 @@ export default {
     }
   },
   mounted () {
-    axios.get('/ajax/moreClassicList?sortId=1&showType=3&limit=10&offset=20&optimus_uuid=836FEBC00A0011EB8D4303BFEF63A30F89399AC08A3A4DDB9AEE9AF4D9BA15ED&optimus_risk_level=71&optimus_code=10').then(res => {
+    http.get('/moreClassicList?sortId=1&showType=3&limit=10&offset=20&optimus_uuid=836FEBC00A0011EB8D4303BFEF63A30F89399AC08A3A4DDB9AEE9AF4D9BA15ED&optimus_risk_level=71&optimus_code=10').then(res => {
       this.classicList = res.data
       console.log(this.classicList)
     })
@@ -47,7 +47,7 @@ export default {
       console.log('到底了e')
       //   this.current++
       this.offset += 10
-      axios.get(`/ajax/moreClassicList?sortId=1&showType=3&limit=10&offset=${this.offset}&optimus_uuid=836FEBC00A0011EB8D4303BFEF63A30F89399AC08A3A4DDB9AEE9AF4D9BA15ED&optimus_risk_level=71&optimus_code=10`).then(res => {
+      http.get(`/moreClassicList?sortId=1&showType=3&limit=10&offset=${this.offset}&optimus_uuid=836FEBC00A0011EB8D4303BFEF63A30F89399AC08A3A4DDB9AEE9AF4D9BA15ED&optimus_risk_level=71&optimus_code=10`).then(res => {
         this.list = [...this.classicList, ...res.data]
         this.classicList = this.list.join('')
         console.log(this.classicList)
