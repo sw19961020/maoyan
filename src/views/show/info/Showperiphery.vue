@@ -26,7 +26,6 @@
 import axios from 'axios'
 import Vue from 'vue'
 import { List, Cell } from 'vant'
-
 Vue.use(List).use(Cell)
 export default {
   data () {
